@@ -36,3 +36,20 @@ jobs:
         displayName: 'TESTS: frontend'
       - script: ./mvnw -ntp verify -Pprod -DskipTests
         displayName: 'TESTS: packaging'
+      #----------------------------------------------------------------------
+      # Production build
+      #----------------------------------------------------------------------
+      #doing a production build with JHipster.+ skiptest
+      - script: ./mvnw package -Pprod -DskipTests
+        displayName: 'BUILD: creating production build'
+      #copy the generated  JAR file to a directory where artifacts are being stored.
+      - task: CopyFiles@2
+        inputs:
+          SourceFolder: 'target'
+          Contents: '*.jar'
+          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      #take that artifact and publish it.
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          artifactName: bugtracker
