@@ -52,4 +52,4 @@ jobs:
       - task: PublishBuildArtifacts@1
         inputs:
           pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-          artifactName: bugtracker
+          artifactName: SpringAzureApp
